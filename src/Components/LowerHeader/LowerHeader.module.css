@@ -1,0 +1,32 @@
+.container ul {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+.container {
+  color: white;
+  background-color: gray;
+}
+.container ul li {
+  padding: 8px;
+  cursor: pointer;
+}
+li {
+  list-style: none;
+}
+li:hover {
+  border: 1px solid black;
+  border-radius: 3px;
+}
+.container ul li:first-child {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+@media screen and (max-width: 576px) {
+  .container ul li:not(:first-child) {
+    display: none;
+  }
+}
