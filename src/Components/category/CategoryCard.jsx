@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Category.module.css";
 function CategoryCard({ data }) {
-  console.log(data);
+  //console.log(data);
   return (
     <div className={classes.category}>
       <a href={`/category/${data.name}`}>

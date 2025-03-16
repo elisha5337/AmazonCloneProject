@@ -4,6 +4,7 @@ import Landing from "../Landing/Landing";
 import Signup from "../Auth/Signup";
 import Orders from "../Orders/Orders";
 import Cart from "../Cart/Cart";
+import ProductDetail from "../ProductDetail/ProductDetail";
 import Payment from "../Payment/Payment";
 import Results from "../Results/Results";
 function Routing() {
@@ -17,6 +18,7 @@ function Routing() {
           <Route path="/Orders" element={<Orders />} />
           <Route path="/Cart" element={<Cart />} />
           <Route path="/category/:categoryName" element={<Results />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
           <Route path="/auth" element={<Signup />} />
         </Routes>
       </Router>

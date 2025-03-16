@@ -8,6 +8,7 @@ import Product from "./Components/product/Product";
 import Landing from "./Pages/Landing/Landing";
 import Routing from "./Pages/Routing/Routing";
 import Layout from "./Components/Layout/Layout";
+import Results from "./Pages/Results/Results";
 function App() {
   return (
     <>
