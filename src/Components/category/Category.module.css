@@ -34,3 +34,11 @@
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
 }
+@media screen and (max-width: 760px) {
+  .category_container {
+    flex-direction: column !important;
+  }
+  .category {
+    width: 70%;
+  }
+}

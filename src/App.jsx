@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
-import CarousalEffect from "./Components/carousal/Carousal";
-import Header from "./Components/Header/Header";
-import Category from "./Components/category/Category";
-import { CategoryInfo } from "./Components/category/CategoryInfo";
-import Product from "./Components/product/Product";
-import Landing from "./Pages/Landing/Landing";
 import Routing from "./Pages/Routing/Routing";
-import Layout from "./Components/Layout/Layout";
-import Results from "./Pages/Results/Results";
+import { Type } from "./util/Action.type";
+import { auth } from "./util/Firebase";
+import { DataContext } from "./Components/DataProvider/DataProvider";
 function App() {
+  const [user, dispatch] = useContext(DataContext);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        console.log(authUser);
+        dispatch({ type: Type.SET_USER, user: authUser });
+      } else {
+        dispatch({ type: Type.SET_USER, user: null });
+      }
+    });
+    return () => unsubscribe();
+  }, [dispatch]);
   return (
     <>
       <Routing></Routing>
@@ -18,3 +26,17 @@ function App() {
 }
 
 export default App;
+/* useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        console.log(authUser);
+        dispatch({ type: Type.SET_USER, user: authUser });
+      } else {
+        dispatch({ type: Type.SET_USER, user: null });
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [dispatch]); // Add dispatch to the dependency array
+ */

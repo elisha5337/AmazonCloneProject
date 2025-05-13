@@ -37,7 +37,7 @@ function Results() {
           <p style={{ padding: "30px" }}>Category:{categoryName}</p> <hr />
           <div className={classes.product_container}>
             {results?.map((product) => {
-              return <ProductCard key={product.id} product={product} />;
+              return <ProductCard key={product.id} product={product} renderAdd={true} />;
             })}
           </div>
         </section>

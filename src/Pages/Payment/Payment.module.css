@@ -1,0 +1,37 @@
+.Payment_header {
+  background-color: rgb(234, 237, 237);
+  justify-content: center;
+  padding: 20px;
+  font-size: 24px;
+  text-align: center;
+}
+.flex {
+  gap: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.flex img {
+  width: 80px !important;
+}
+.flex div {
+  height: auto !important;
+}
+.payment_card_container {
+  max-width: 350px;
+  width: 100%;
+  font-size: 20px;
+}
+.payment_price {
+  padding: 20px;
+}
+.payment_price > div {
+  display: flex;
+  font-size: 16px;
+  gap: 10spx;
+}
+@media screen and (max-width: 760px) {
+  .flex {
+    flex-direction: column;
+  }
+}
