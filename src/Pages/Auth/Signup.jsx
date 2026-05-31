@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import image from "../../assets/amazon.256x256 (2).ico";
-import classes from "./Signup.module.css";
+import classes from "./Signup.module.css"; // Assuming this is the CSS module for Signup
 import { Link, useNavigate } from "react-router";
 import { auth } from "../../util/Firebase";
 import { Type } from "../../util/Action.type";
@@ -28,6 +28,23 @@ function Signup() {
 
   const handleAuth = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
+
+    // Basic frontend validation
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+
+    if (!isLogin && !name) {
+      setError("Name is required to create an account.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
 
     if (isLogin) {
       try {
@@ -88,6 +105,7 @@ function Signup() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
           )}
@@ -98,6 +116,7 @@ function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               id="email"
+              required
             />
           </div>
           <div>
@@ -107,6 +126,7 @@ function Signup() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
+              required
             />
           </div>
           <button type="submit" className={classes.signInBtn}>
