@@ -42,7 +42,7 @@ function Signup() {
           type: Type.SET_USER,
           user: userInfo.user,
         });
-        navigate("/Home");
+        navigate("/home");
         setLoading({ ...loading, signin: false });
       } catch (err) {
         setError(err.message);
@@ -65,7 +65,7 @@ function Signup() {
           user: userInfo.user,
         });
         setLoading({ ...loading, signup: false });
-        navigate("/Home");
+        navigate("/home");
       } catch (err) {
         setError(err.message);
         setLoading({ ...loading, signup: false });
