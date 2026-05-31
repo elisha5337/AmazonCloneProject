@@ -1,4 +1,5 @@
 import React from "react";
+
 import classes from "./categoryCard.module.css";
 import { CategoryInfo } from "./CategoryInfo.jsx";
 import CategoryCard from "./CategoryCard.jsx";
