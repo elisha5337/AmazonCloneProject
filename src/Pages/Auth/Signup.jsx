@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import image from "../../assets/amazon.256x256 (2).ico";
 import classes from "./Signup.module.css";
-import Layout from "../../Components/Layout/Layout";
 import { Link, useNavigate } from "react-router";
 import { auth } from "../../util/Firebase";
 import { Type } from "../../util/Action.type";
@@ -10,13 +9,15 @@ import { DataContext } from "../../Components/DataProvider/DataProvider";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 function Signup() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  // const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState({
     signin: false,
     signup: false,
@@ -25,18 +26,17 @@ function Signup() {
   const [user, dispatch] = useContext(DataContext);
   console.log(user);
 
-  const authHandler = async (e) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
 
-    // Assuming you have email and password state variable
-    if (e.target.name == "signIn") {
+    if (isLogin) {
       try {
         setLoading({ ...loading, signin: true });
         const userInfo = await signInWithEmailAndPassword(
           auth,
 
           email,
-          password
+          password,
         );
         dispatch({
           type: Type.SET_USER,
@@ -54,14 +54,18 @@ function Signup() {
         const userInfo = await createUserWithEmailAndPassword(
           auth,
           email,
-          password
+          password,
         );
+        await updateProfile(userInfo.user, {
+          displayName: name,
+        });
         console.log(userInfo);
         dispatch({
           type: Type.SET_USER,
           user: userInfo.user,
         });
         setLoading({ ...loading, signup: false });
+        navigate("/Home");
       } catch (err) {
         setError(err.message);
         setLoading({ ...loading, signup: false });
@@ -74,17 +78,19 @@ function Signup() {
         <img src={image} alt="image" />
       </Link>
       <div className={classes.login_container}>
-        <h1>Sign-in</h1>
-        <form action="">
-          <div>
-            <label htmlFor="name">name</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.name)}
-            />
-          </div>
+        <h1>{isLogin ? "Sign-In" : "Create Account"}</h1>
+        <form onSubmit={handleAuth}>
+          {!isLogin && (
+            <div>
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+          )}
           <div>
             <label htmlFor="email">E-mail</label>
             <input
@@ -103,28 +109,30 @@ function Signup() {
               type="password"
             />
           </div>
-          <button
-            name="signIn"
-            type="submit"
-            onClick={authHandler}
-            className={classes.signInBtn}
-          >
-            {loading.signin ? <ClipLoader color="blue" size={15} /> : "sign in"}
+          <button type="submit" className={classes.signInBtn}>
+            {isLogin ? (
+              loading.signin ? (
+                <ClipLoader color="orange" size={15} />
+              ) : (
+                "Sign In"
+              )
+            ) : loading.signup ? (
+              <ClipLoader color="orange" size={15} />
+            ) : (
+              "Create your Amazon Account"
+            )}
           </button>
         </form>
         <p>By signing you agree to our terms and conditions</p>
         <button
-          name="signUp"
-          onClick={authHandler}
+          onClick={() => setIsLogin(!isLogin)}
           className={classes.registerButton}
         >
-          {loading.signup ? <ClipLoader color="blue" size={15} /> : "sign up"}
+          {isLogin
+            ? "Create your Amazon Account"
+            : "Already have an account? Sign In"}
         </button>
-        {error && (
-          <small className={classes.error} onChange={""}>
-            {error}
-          </small>
-        )}
+        {error && <small className={classes.error}>{error}</small>}
       </div>
     </section>
   );
