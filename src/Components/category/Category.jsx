@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Category.module.css";
+import classes from "./categoryCard.module.css";
 import { CategoryInfo } from "./CategoryInfo.jsx";
 import CategoryCard from "./CategoryCard.jsx";
 function Category() {
